@@ -1,14 +1,21 @@
 ﻿using CKSource.CKFinder.Connector.Config;
+using CKSource.CKFinder.Connector.Core;
 using CKSource.CKFinder.Connector.Core.Acl;
+using CKSource.CKFinder.Connector.Core.Authentication;
 using CKSource.CKFinder.Connector.Core.Builders;
 using CKSource.CKFinder.Connector.Host.Owin;
 using CKSource.CKFinder.Connector.KeyValue.FileSystem;
 using CKSource.FileSystem.Local;
 using Microsoft.Owin;
+using Microsoft.Owin.FileSystems;
+using Microsoft.Owin.StaticFiles;
+using Microsoft.Owin.StaticFiles.ContentTypes;
 using Owin;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Web;
 
 [assembly: OwinStartupAttribute(typeof(CustomCKEditor.Startup))]
@@ -23,6 +30,14 @@ namespace CustomCKEditor
             FileSystemFactory.RegisterFileSystem<LocalStorage>();
 
             app.Map("/ckfinder/connector", SetupConnector);
+
+            /* Configure access to local files for JavaScript files. */
+            var options = new FileServerOptions();
+            options.StaticFileOptions.ContentTypeProvider = new ContentTypeProvider();
+            options.FileSystem = new PhysicalFileSystem("App_Data");
+
+            /* Map local files at the root path. */
+            app.UseFileServer(options);
         }
 
         private static void SetupConnector(IAppBuilder app)
@@ -61,12 +76,9 @@ namespace CustomCKEditor
                          *
                          * For example:
                          */
-                        config.AddBackend("cckfinder", new LocalStorage(@"App_Data"));
-                        config.RemoveResourceType("Files");
-                        config.RemoveResourceType("Images");
-
+                        config.AddProxyBackend("local", new LocalStorage(@"App_Data"));
                         config.AddResourceType("Images", builder => builder
-                            .SetBackend("cckfinder", "Images")
+                            .SetBackend("local", "images")
                             .SetAllowedExtensions("gif", "jpeg", "jpg", "png")
                         );
                         config.SetOverwriteOnUpload(true);
@@ -77,12 +89,6 @@ namespace CustomCKEditor
                             new StringMatcher("*"),
                             new Dictionary<Permission, PermissionType> { { Permission.All, PermissionType.Allow } }));
 
-                        /*
-                         * If you installed CKSource.CKFinder.Connector.KeyValue.FileSystem, you may enable caching:
-                         */
-                        var defaultBackend = config.GetBackend("cckfinder");
-                        var keyValueStoreProvider = new FileSystemKeyValueStoreProvider(defaultBackend);
-                        config.SetKeyValueStoreProvider(keyValueStoreProvider);
                     }
                 ).SetAuthenticator(new CKFinderAuthenticator());
 
@@ -96,6 +102,23 @@ namespace CustomCKEditor
              * Add the CKFinder connector middleware to the web application pipeline.
              */
             app.UseConnector(connector);
+        }
+    }
+
+    public class CKFinderAuthenticator : IAuthenticator
+    {
+        public Task<IUser> AuthenticateAsync(ICommandRequest commandRequest, CancellationToken cancellationToken)
+        {
+            var user = new User(true, null);
+            return Task.FromResult((IUser)user);
+        }
+    }
+
+    public class ContentTypeProvider : FileExtensionContentTypeProvider
+    {
+        public ContentTypeProvider()
+        {
+            Mappings.Add(".json", "application/json");
         }
     }
 }

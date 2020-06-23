@@ -329,21 +329,35 @@
 								appendToken( fileInput );
 								return true;
 							} else {
-								var loader = editor.uploadRepository.create( fileInput.$.files[ 0 ] );
+								var file = fileInput.$.files[ 0 ];
+								var commandParam = url.match(/command=([^&]*)/)[0];
+								var predictedUrl = url.replace(commandParam, 'command=Proxy') + '&fileName=' + file.name;
 
-								loader.on( 'uploaded', function( evt ) {
-									var response = evt.sender.responseData;
-									setUrl.call( evt.sender.editor, response.url, response.message );
-								} );
+								var self = this
+								var xhr = new XMLHttpRequest();
+								xhr.open('GET', predictedUrl, false);
+								xhr.send();
 
-								// Return non-false value will disable fileButton in dialogui,
-								// below listeners takes care of such situation and re-enable "send" button.
-								loader.on( 'error', xhrUploadErrorHandler.bind( this ) );
-								loader.on( 'abort', xhrUploadErrorHandler.bind( this ) );
+								if (xhr.status !== 200 || (xhr.status === 200 && confirm('An image with the same name exists. Do you want to overwrite it?'))) {
+									var loader = editor.uploadRepository.create( file );
 
-								loader.loadAndUpload( addMissingParams( url ) );
+									loader.on( 'uploaded', function( evt ) {
+										var response = evt.sender.responseData;
+										setUrl.call( evt.sender.editor, response.url, response.message );
+									} );
 
-								return 'xhr';
+									// Return non-false value will disable fileButton in dialogui,
+									// below listeners takes care of such situation and re-enable "send" button.
+									loader.on( 'error', xhrUploadErrorHandler.bind( self ) );
+									loader.on( 'abort', xhrUploadErrorHandler.bind( self ) );
+
+									loader.loadAndUpload( addMissingParams( url ) );
+
+									return 'xhr';
+								}
+								
+								fileInput.$.value = '';
+								return false;
 							}
 						}
 						return false;
