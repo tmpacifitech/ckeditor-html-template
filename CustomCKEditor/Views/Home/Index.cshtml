@@ -1,0 +1,16 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+
+
+<h2>CKFinder widget usage example</h2>
+<h3>@ViewBag.Message</h3>
+
+<div id="ckfinder-widget"></div>
+<textarea name="editor" id="editor" rows="10" cols="80">
+    This is my textarea to be replaced with CKEditor 4.
+  </textarea>
+<script>
+    CKEDITOR.replace('editor');
+    CKFinder.setupCKEditor(null, '/ckfinder/');
+</script>
