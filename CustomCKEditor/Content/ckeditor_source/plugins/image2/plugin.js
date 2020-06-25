@@ -413,7 +413,7 @@
 					}
 					// Read initial float style from figure/image and then remove it.
 					else {
-						data.align = alignElement.getStyle( 'float' ) || 'none';
+						data.align = alignElement.getAttribute('align') || alignElement.getStyle( 'float' ) || 'none';
 						alignElement.removeStyle( 'float' );
 					}
 				}
@@ -1014,13 +1014,15 @@
 				else if ( align in { left: 1, right: 1 } ) {
 					if ( alignClasses )
 						attrsHolder.addClass( alignClasses[ alignmentsObj[ align ] ] );
-					else
-						styles[ 'float' ] = align;
+					// else
+					// 	styles[ 'float' ] = align;
 				}
 
 				// Update element styles.
 				if ( !alignClasses && !CKEDITOR.tools.isEmpty( styles ) )
 					attrs.style = CKEDITOR.tools.writeCssText( styles );
+
+				attrs.align = align;
 			}
 
 			return el;
@@ -1576,7 +1578,7 @@
 					match: centerWrapperChecker( editor )
 				},
 				img: {
-					attributes: '!src,alt,width,height'
+					attributes: '!src,alt,width,height,align'
 				},
 				figure: {
 					classes: '!' + editor.config.image2_captionedClass

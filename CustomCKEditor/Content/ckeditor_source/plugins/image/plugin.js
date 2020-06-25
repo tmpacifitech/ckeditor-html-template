@@ -28,19 +28,19 @@
 			// Register the dialog.
 			CKEDITOR.dialog.add( pluginName, this.path + 'dialogs/image.js' );
 
-			var allowed = 'img[alt,!src]{border-style,border-width,float,height,margin,margin-bottom,margin-left,margin-right,margin-top,width}',
+			var allowed = 'img[alt,!src]{border-style,border-width,height,margin,margin-bottom,margin-left,margin-right,margin-top,width}',
 				required = 'img[alt,src]';
 
 			if ( CKEDITOR.dialog.isTabEnabled( editor, pluginName, 'advanced' ) )
-				allowed = 'img[alt,dir,id,lang,longdesc,!src,title]{*}(*)';
+				allowed = 'img[alt,align,width,border,hspace,height,dir,id,lang,longdesc,!src,title]{*}(*)';
 
 			// Register the command.
 			editor.addCommand( pluginName, new CKEDITOR.dialogCommand( pluginName, {
 				allowedContent: allowed,
 				requiredContent: required,
 				contentTransformations: [
-					[ 'img{width}: sizeToStyle', 'img[width]: sizeToAttribute' ],
-					[ 'img{float}: alignmentToStyle', 'img[align]: alignmentToAttribute' ]
+					// [ 'img{width}: sizeToStyle', 'img[width]: sizeToAttribute' ],
+					// [ 'img{float}: alignmentToStyle', 'img[align]: alignmentToAttribute' ]
 				]
 			} ) );
 
@@ -105,7 +105,8 @@
 									if ( value == getImageAlignment( img ) )
 										img.removeAttribute( 'align' );
 								} else {
-									img.setStyle( 'float', value );
+									// img.setStyle( 'float', value );
+									img.setAttribute('align', value);
 								}
 
 								evt.cancel();
