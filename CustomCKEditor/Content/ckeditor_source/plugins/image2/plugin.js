@@ -1377,7 +1377,7 @@
 						var context = elem.getContext('2d');
 						context.drawImage(this, 0, 0, this.width, this.height, 0, 0, elem.width, elem.height);
 
-						context.canvas.toBlob((blob) => {
+						context.canvas.toBlob(function (blob) {
 							var file = new File([blob], filename, {
 									type: blob.type,
 									lastModified: Date.now()
