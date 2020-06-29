@@ -1344,13 +1344,58 @@
 
 				if ( updateData ) {
 					widget.setData( updateData );
+					var img = new Image();
+					img.src = widget.data.src;
 
-					// Save another undo snapshot: after resizing.
-					editor.fire( 'saveSnapshot' );
+					var fileNameParam = widget.data.src.match(/fileName=([^&]*)/)[0];
+					var filename = fileNameParam.replace('fileName=', '');
+
+					var uploadUrl = widget.data.src.replace(fileNameParam, '');
+
+					var currentFolderParam = widget.data.src.match(/currentFolder=([^&]*)/)[0];
+					uploadUrl = uploadUrl.replace(currentFolderParam, '');
+
+					var hashParam = widget.data.src.match(/hash=([^&]*)/)[0];
+					uploadUrl = uploadUrl.replace(hashParam, '');
+
+					var langParam = widget.data.src.match(/lang=([^&]*)/)[0];
+					uploadUrl = uploadUrl.replace(langParam, '');
+
+					var commandParam = widget.data.src.match(/command=([^&]*)/)[0];
+					uploadUrl = uploadUrl.replace(commandParam, 'command=QuickUpload');
+
+					while (uploadUrl[uploadUrl.length - 1] === '&') {
+						uploadUrl = uploadUrl.substring(0, uploadUrl.length - 1);
+					}
+					uploadUrl = uploadUrl.replace('&&', '&');
+					uploadUrl += '&responseType=json';
+					
+					img.onload = function () {
+						var elem = document.createElement('canvas');
+						elem.width = updateData.width;
+						elem.height = updateData.height;
+						var context = elem.getContext('2d');
+						context.drawImage(this, 0, 0, this.width, this.height, 0, 0, elem.width, elem.height);
+
+						context.canvas.toBlob((blob) => {
+							var file = new File([blob], filename, {
+									type: blob.type,
+									lastModified: Date.now()
+							}); //output image as a file
+							var loader = editor.uploadRepository.create( file );
+
+							loader.on( 'uploaded', function( evt ) {
+								// Save another undo snapshot: after resizing.
+								editor.fire( 'saveSnapshot' );
+
+								// Don't update data twice or more.
+								updateData = false;
+							} );
+
+							loader.loadAndUpload( uploadUrl );
+						});
+					}
 				}
-
-				// Don't update data twice or more.
-				updateData = false;
 			}
 
 			function getMaxSize() {
