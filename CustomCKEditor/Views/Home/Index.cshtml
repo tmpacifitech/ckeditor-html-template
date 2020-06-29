@@ -4,9 +4,12 @@
 
 <textarea name="editor" id="editor" rows="10"></textarea>
 <script>
-    CKEDITOR.replace('editor', {
+    var editor = CKEDITOR.replace('editor', {
         height: 500,
         filebrowserImageUploadUrl: '/ckfinder/connector?command=QuickUpload&type=Images',
     });
-    CKFinder.setupCKEditor(null, '/ckfinder/');
+    var config = {
+        resizeImages: false
+    };
+    CKFinder.setupCKEditor(editor, config, '/ckfinder/');
 </script>
