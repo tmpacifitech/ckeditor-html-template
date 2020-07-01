@@ -1350,25 +1350,8 @@
 					var fileNameParam = widget.data.src.match(/fileName=([^&]*)/)[0];
 					var filename = fileNameParam.replace('fileName=', '');
 
-					var uploadUrl = widget.data.src.replace(fileNameParam, '');
-
-					var currentFolderParam = widget.data.src.match(/currentFolder=([^&]*)/)[0];
-					uploadUrl = uploadUrl.replace(currentFolderParam, '');
-
-					var hashParam = widget.data.src.match(/hash=([^&]*)/)[0];
-					uploadUrl = uploadUrl.replace(hashParam, '');
-
-					var langParam = widget.data.src.match(/lang=([^&]*)/)[0];
-					uploadUrl = uploadUrl.replace(langParam, '');
-
-					var commandParam = widget.data.src.match(/command=([^&]*)/)[0];
-					uploadUrl = uploadUrl.replace(commandParam, 'command=QuickUpload');
-
-					while (uploadUrl[uploadUrl.length - 1] === '&') {
-						uploadUrl = uploadUrl.substring(0, uploadUrl.length - 1);
-					}
-					uploadUrl = uploadUrl.replace('&&', '&');
-					uploadUrl += '&responseType=json';
+					var urlSegs = widget.data.src.split('/');
+					var uploadUrl = urlSegs[0] + '//' + urlSegs[2] + "/ckfinder/connector?command=QuickUpload&type=Images&responseType=json"
 					
 					img.onload = function () {
 						var elem = document.createElement('canvas');

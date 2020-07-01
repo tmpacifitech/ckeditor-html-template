@@ -80,6 +80,7 @@ namespace CustomCKEditor
                         config.AddResourceType("Images", builder => builder
                             .SetBackend("local", "images")
                             .SetAllowedExtensions("gif", "jpeg", "jpg", "png")
+                            .SetMaxFileSize(long.MaxValue)
                         );
                         config.SetOverwriteOnUpload(true);
 
