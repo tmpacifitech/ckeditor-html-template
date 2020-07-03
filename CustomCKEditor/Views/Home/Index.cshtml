@@ -2,12 +2,15 @@
     ViewBag.Title = "Home Page";
 }
 
-<textarea name="editor" id="editor" rows="10"></textarea>
+<textarea name="editor" id="editor" rows="10">
+    
+</textarea>
 <script>
     var editor = CKEDITOR.replace('editor', {
         height: 500,
         filebrowserImageUploadUrl: '/ckfinder/connector?command=QuickUpload&type=Images',
     });
+
     var config = {
         resizeImages: false
     };

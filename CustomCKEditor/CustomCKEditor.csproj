@@ -834,7 +834,6 @@
     <Content Include="CKFinderScripts\skins\neko\images\svg\white\arrow-right-white.svg" />
     <Content Include="CKFinderScripts\skins\neko\skin.js" />
     <Content Include="Content\ckeditor\adapters\jquery.js" />
-    <Content Include="Content\ckeditor\CHANGES.md" />
     <Content Include="Content\ckeditor\ckeditor.js" />
     <Content Include="Content\ckeditor\config.js" />
     <Content Include="Content\ckeditor\contents.css" />
@@ -909,7 +908,6 @@
     <Content Include="Content\ckeditor\lang\zh-cn.js" />
     <Content Include="Content\ckeditor\lang\zh.js" />
     <Content Include="Content\ckeditor\lang\_translationstatus.txt" />
-    <Content Include="Content\ckeditor\LICENSE.md" />
     <Content Include="Content\ckeditor\plugins\a11yhelp\dialogs\a11yhelp.js" />
     <Content Include="Content\ckeditor\plugins\a11yhelp\dialogs\lang\af.js" />
     <Content Include="Content\ckeditor\plugins\a11yhelp\dialogs\lang\ar.js" />
@@ -1112,10 +1110,7 @@
     <Content Include="Content\ckeditor\plugins\codesnippet\lang\vi.js" />
     <Content Include="Content\ckeditor\plugins\codesnippet\lang\zh-cn.js" />
     <Content Include="Content\ckeditor\plugins\codesnippet\lang\zh.js" />
-    <Content Include="Content\ckeditor\plugins\codesnippet\lib\highlight\CHANGES.md" />
     <Content Include="Content\ckeditor\plugins\codesnippet\lib\highlight\highlight.pack.js" />
-    <Content Include="Content\ckeditor\plugins\codesnippet\lib\highlight\LICENSE" />
-    <Content Include="Content\ckeditor\plugins\codesnippet\lib\highlight\README.ru.md" />
     <Content Include="Content\ckeditor\plugins\codesnippet\lib\highlight\styles\arta.css" />
     <Content Include="Content\ckeditor\plugins\codesnippet\lib\highlight\styles\ascetic.css" />
     <Content Include="Content\ckeditor\plugins\codesnippet\lib\highlight\styles\atelier-dune.dark.css" />
@@ -1421,7 +1416,6 @@
     <Content Include="Content\ckeditor\plugins\embed\plugin.js" />
     <Content Include="Content\ckeditor\plugins\emoji\assets\iconsall.png" />
     <Content Include="Content\ckeditor\plugins\emoji\assets\iconsall.svg" />
-    <Content Include="Content\ckeditor\plugins\emoji\emoji.json" />
     <Content Include="Content\ckeditor\plugins\emoji\icons\emojipanel.png" />
     <Content Include="Content\ckeditor\plugins\emoji\icons\hidpi\emojipanel.png" />
     <Content Include="Content\ckeditor\plugins\emoji\lang\en.js" />
@@ -2014,7 +2008,6 @@
     <Content Include="Content\ckeditor\skins\kama\images\sprites.png" />
     <Content Include="Content\ckeditor\skins\kama\images\sprites_ie6.png" />
     <Content Include="Content\ckeditor\skins\kama\images\toolbar_start.gif" />
-    <Content Include="Content\ckeditor\skins\kama\readme.md" />
     <Content Include="Content\ckeditor\skins\kama\skin.js" />
     <Content Include="Content\ckeditor\skins\moono-lisa\dialog.css" />
     <Content Include="Content\ckeditor\skins\moono-lisa\dialog_ie.css" />
@@ -2037,7 +2030,6 @@
     <Content Include="Content\ckeditor\skins\moono-lisa\images\lock.png" />
     <Content Include="Content\ckeditor\skins\moono-lisa\images\refresh.png" />
     <Content Include="Content\ckeditor\skins\moono-lisa\images\spinner.gif" />
-    <Content Include="Content\ckeditor\skins\moono-lisa\readme.md" />
     <Content Include="Content\ckeditor\skins\moono\dialog.css" />
     <Content Include="Content\ckeditor\skins\moono\dialog_ie.css" />
     <Content Include="Content\ckeditor\skins\moono\dialog_ie7.css" />
@@ -2063,7 +2055,6 @@
     <Content Include="Content\ckeditor\skins\moono\images\lock.png" />
     <Content Include="Content\ckeditor\skins\moono\images\refresh.png" />
     <Content Include="Content\ckeditor\skins\moono\images\spinner.gif" />
-    <Content Include="Content\ckeditor\skins\moono\readme.md" />
     <Content Include="Content\ckeditor\skins\moono\skin.js" />
     <Content Include="Content\ckeditor\styles.js" />
     <Content Include="Content\ckeditor\vendor\promise.js" />
@@ -8942,7 +8933,16 @@
     <Content Include="Content\ckeditor_source\skins\moono-lisa\readme.md" />
     <Content Include="Content\ckeditor_source\skins\moono\dev\locations.json" />
     <Content Include="Content\ckeditor_source\skins\moono\readme.md" />
+    <Content Include="Content\ckeditor\CHANGES.md" />
+    <Content Include="Content\ckeditor\LICENSE.md" />
+    <Content Include="Content\ckeditor\plugins\codesnippet\lib\highlight\CHANGES.md" />
+    <Content Include="Content\ckeditor\plugins\codesnippet\lib\highlight\LICENSE" />
+    <Content Include="Content\ckeditor\plugins\codesnippet\lib\highlight\README.ru.md" />
+    <Content Include="Content\ckeditor\plugins\emoji\emoji.json" />
     <Content Include="Content\ckeditor\plugins\htmlwriter\samples\assets\outputforflash\outputforflash.fla" />
+    <Content Include="Content\ckeditor\skins\kama\readme.md" />
+    <Content Include="Content\ckeditor\skins\moono-lisa\readme.md" />
+    <Content Include="Content\ckeditor\skins\moono\readme.md" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>

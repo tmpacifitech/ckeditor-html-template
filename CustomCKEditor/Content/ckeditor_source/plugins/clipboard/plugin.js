@@ -1603,13 +1603,43 @@
 			function externalDrop( dropRange, dataTransfer ) {
 				// Paste content into the drop position.
 				dropRange.select();
+				var parentElement = editor.getSelection().getStartElement();
+				if (dataTransfer.$.files.length === 1 && parentElement && parentElement.getSize('width')) {
+						var file = dataTransfer.$.files[0];
+						var reader = new FileReader();
+						reader.readAsDataURL(file);
+						reader.onload = function (readerEvent) {
+							var image = new Image();
+							image.src = readerEvent.target.result;
 
-				firePasteEvents( editor, { dataTransfer: dataTransfer, method: 'drop' }, 1 );
+							image.onload = function () {
+								var elem = document.createElement('canvas');
+								elem.width = parentElement.getSize('width');
+								elem.height = elem.width * image.height / image.width;
 
-				// Usually we reset DataTranfer on dragend,
-				// but dragend is called on the same element as dragstart
-				// so it will not be called on on external drop.
-				clipboard.resetDragDataTransfer();
+								var context = elem.getContext('2d');
+								context.drawImage(image, 0, 0, image.width, image.height, 0, 0, elem.width, elem.height);
+
+								context.canvas.toBlob(function(blob) {
+									var newFile = new File([blob], file.name, {
+										type: blob.type,
+										lastModified: Date.now()
+									});
+
+									var newDataTransfer = new DataTransfer()
+									newDataTransfer.items.add(newFile);
+									dataTransfer.$ = newDataTransfer;
+
+									firePasteEvents( editor, { dataTransfer: dataTransfer, method: 'drop' }, 1 );
+
+									// Usually we reset DataTranfer on dragend,
+									// but dragend is called on the same element as dragstart
+									// so it will not be called on on external drop.
+									clipboard.resetDragDataTransfer();
+								})
+							}
+						}
+				}
 			}
 
 			// Fire drag/drop events (dragstart, dragend, drop).
