@@ -1604,6 +1604,20 @@
 				// Paste content into the drop position.
 				dropRange.select();
 				var parentElement = editor.getSelection().getStartElement();
+
+				var availableTags = ['DIV', 'TD', 'P', 'SECTION', 'TBODY', 'UL', 'LI', 'BODY', 'HTML']
+				while (true) {
+					if (!parentElement.$) {
+						break;
+					}
+					var index = availableTags.findIndex(function (tag) {
+						return tag === parentElement.$.tagName.toUpperCase()
+					});
+					if (index >= 0) {
+						break;
+					}
+					parentElement = parentElement.getParent();
+				}
 				if (dataTransfer.$.files.length === 1 && parentElement && parentElement.getSize('width')) {
 						var file = dataTransfer.$.files[0];
 						var reader = new FileReader();

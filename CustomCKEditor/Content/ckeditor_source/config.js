@@ -59,7 +59,6 @@ CKEDITOR.editorConfig = function( config ) {
 		'save,' +
 		'selectall,' +
 		'showblocks,' +
-		'showborders,' +
 		'smiley,' +
 		'sourcearea,' +
 		'specialchar,' +
